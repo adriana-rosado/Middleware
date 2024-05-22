@@ -1,14 +1,23 @@
+from flask import Flask, render_template, request, redirect, url_for
 import Pyro4
 
-# Configuración de conexión Pyro con el servidor de chat
-chat_server = Pyro4.Proxy("PYRO:obj_cb688307b9cd450abf9b343ee5fe2e31@localhost:3303") 
+app = Flask(__name__)
 
-def main():
-    while True:
-        message1 = input("Escribe un mensaje para enviar al chat: ")
+# Configuración de conexión Pyro con el servidor de chat
+#ipxx ="192.168.1.82"
+chat_server = Pyro4.Proxy("PYRO:obj_06bf81992ec84f989a18ceebf3af81ad@192.168.102.29:49781")
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/send', methods=['POST'])
+def send_message():
+    message1 = request.form['message']
+    if message1.strip():  # Verificar que el mensaje no esté vacío
         message2 = "client: " + message1
         chat_server.send_message(message2)
-        print("Mensaje enviado al chat.")
+    return redirect(url_for('index'))
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(debug=True)

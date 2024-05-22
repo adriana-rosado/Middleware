@@ -7,7 +7,7 @@ import Pyro4
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret123"
 socketio = SocketIO(app, cors_allowed_origins="*")
-chat_server = Pyro4.Proxy("PYRO:obj_cb688307b9cd450abf9b343ee5fe2e31@localhost:3303") 
+chat_server = Pyro4.Proxy("PYRO:obj_06bf81992ec84f989a18ceebf3af81ad@192.168.102.29:49781") 
 access_code_value = str(random.randint(100000, 999999))
 print("Generated access code:", access_code_value)
 
@@ -85,4 +85,4 @@ def upload_image():
     return '', 204
 
 if __name__ == "__main__":
-    socketio.run(app, host="192.168.1.82", port=5000)
+    socketio.run(app, host="192.168.102.29", port=3400)

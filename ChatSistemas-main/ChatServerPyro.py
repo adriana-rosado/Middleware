@@ -16,8 +16,9 @@ class ChatServerPyro:
     def send_image(self, image_data):
         print("Datos de imagen recibidos en el servidor Pyro:", image_data[:50])
 
-# Iniciar el servidor Pyro
-daemon = Pyro4.Daemon()
+# Iniciar el servidor Pyro con una IP específica
+ip_address = "192.168.102.29"  # la IP de tu servidor
+daemon = Pyro4.Daemon(host=ip_address)
 uri = daemon.register(ChatServerPyro())
 
 print("URI del servidor Pyro:", uri)
